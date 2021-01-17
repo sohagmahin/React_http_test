@@ -10,25 +10,33 @@ class Blog extends Component {
 
     state = {
         posts: [],
+        selectedPostId: null,
     }
-    componentDidMount(){
-       Axios.get('https://jsonplaceholder.typicode.com/posts')
-        .then(response => {
-            const posts = response.data.slice(0,4);
-            const updatedPost = posts.map(post=>{
-                return {
-                    ...post,
-                    author: 'Max',
-                };
-            });
-            this.setState({posts: updatedPost})
-            // console.log(response);
-        })
+    componentDidMount() {
+        Axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(response => {
+                const posts = response.data.slice(0, 4);
+                const updatedPost = posts.map(post => {
+                    return {
+                        ...post,
+                        author: 'Max',
+                    };
+                });
+                this.setState({ posts: updatedPost })
+                // console.log(response);
+            })
     }
-    render () {
+    selectedPostHandler = (id) => {
+        this.setState({ selectedPostId: id });
+    }
+    render() {
 
-        const posts = this.state.posts.map(post=>{
-            return   <Post key = {post.id} title = {post.title} author = {post.author}/>;
+        const posts = this.state.posts.map(post => {
+            return <Post key={post.id}
+                title={post.title}
+                author={post.author}
+                clicked={() => this.selectedPostHandler(post.id)}
+            />;
         })
 
         return (
@@ -37,7 +45,7 @@ class Blog extends Component {
                     {posts}
                 </section>
                 <section>
-                    <FullPost />
+                    <FullPost id={this.state.selectedPostId} />
                 </section>
                 <section>
                     <NewPost />
