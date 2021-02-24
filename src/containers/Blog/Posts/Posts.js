@@ -3,6 +3,7 @@ import Axios from '../../../axios';
 import Post from '../../../components/Post/Post';
 import './Posts.css';
 import { Link } from 'react-router-dom';
+import post from '../../../components/Post/Post';
 
 class Posts extends Component {
     state = {
@@ -30,20 +31,21 @@ class Posts extends Component {
     }
 
     selectedPostHandler = (id) => {
-        this.setState({ selectedPostId: id });
+        // this.props.history.push({ pathname: '/' + id });
+        this.props.history.push('/' + id);
     }
 
     render() {
         let posts = <p style={{ textAlign: "center" }}>Something went wrong!</p>;
         if (!this.state.error) {
             posts = this.state.posts.map(post => {
-                return <Link to={'/' + post.id} key={post.id}>
-                    <Post
-                        title={post.title}
-                        author={post.author}
-                        clicked={() => this.selectedPostHandler(post.id)}
-                    />
-                </Link>
+                //  <Link to={'/' + post.id} key={post.id}>
+                return <Post
+                    title={post.title}
+                    author={post.author}
+                    clicked={() => this.selectedPostHandler(post.id)}
+                />
+                //   </Link> 
             }
             );
         }
