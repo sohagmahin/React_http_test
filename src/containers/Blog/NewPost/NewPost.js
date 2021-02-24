@@ -20,9 +20,10 @@ class NewPost extends Component {
         Axios.post("/posts/", data)
             .then(response => {
                 console.log(response.data);
-                this.setState({
-                    submitted: true
-                });
+                this.props.history.replace('/posts');
+                // this.setState({
+                //     submitted: true
+                // });
             });
     }
 
@@ -31,13 +32,13 @@ class NewPost extends Component {
     }
 
     render() {
-        let redirect = null;
-        redirect = this.state.submitted ? <Redirect to="/posts" /> : null;
+        // let redirect = null;
+        // redirect = this.state.submitted ? <Redirect to="/posts" /> : null;
 
 
         return (
             <div className="NewPost">
-                {redirect}
+                {/* {redirect} */}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} />
